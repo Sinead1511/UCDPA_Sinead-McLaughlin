@@ -30,13 +30,10 @@ Twit = pd.read_csv("facebook_data.csv")
 FB = pd.read_csv("twtr_data.csv")
 
 Merge = Twit.append(FB, sort=False)
-print(Merge)
 
 Merge.sort_values(by='adj_close', ascending=False, inplace=True)
-print(Merge)
 
 Merge.dropna(subset=['date'], inplace=True)
-print(Merge)
 
 result = []
 for value in Merge["adj_close"]:
@@ -47,10 +44,24 @@ for value in Merge["adj_close"]:
         result.append("<$300")
 
 Merge["Result"] = result
-print(Merge)
 
 Merge['adj_high'] = Merge['adj_high'].round(1)
 Merge['adj_low'] = Merge['adj_low'].round(1)
 Merge['adj_open'] = Merge['adj_open'].round(1)
 Merge['adj_close'] = Merge['adj_close'].round(1)
+print(Merge)
+
+List = ['Twitter', 'Facebook']
+print("\nList with the use of Mixed Values: ")
+print("The companies used in this project are: ", end="")
+print(List)
+
+import numpy as np
+
+list_1 = [69.08, 348.64]
+array_1 = np.array(list_1)
+print("Twitter & Facebook SP on 22nd July 21 are: ", end="")
+print(array_1)
+
+Merge.drop_duplicates(subset=['adj_close', 'adj_open'])
 print(Merge)
