@@ -38,10 +38,10 @@ Merge.dropna(subset=['date'], inplace=True)
 result = []
 for value in Merge["adj_close"]:
 
-    if value >= 300:
-        result.append("$300+")
+    if value >= 50:
+        result.append("$50+")
     else:
-        result.append("<$300")
+        result.append("<$50")
 
 Merge["Result"] = result
 
@@ -65,3 +65,47 @@ print(array_1)
 
 Merge.drop_duplicates(subset=['adj_close', 'adj_open'])
 print(Merge)
+
+OverUnder = Merge['adj_close'].groupby(Merge['Result'])
+print(OverUnder)
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+plt.figure(figsize=(10, 10))
+
+Mergefilt = Merge[(Merge.Result == '<$50')]
+
+sns.set(style="darkgrid")
+plots = sns.barplot(x="symbol", y="adj_close", data=Mergefilt)
+
+for bar in plots.patches:
+    plots.annotate(format(bar.get_height(), '.2f'),
+                   (bar.get_x() + bar.get_width() / 2,
+                    bar.get_height()), ha='center', va='center',
+                   size=20, xytext=(0, 20),
+                   textcoords='offset points')
+
+plt.xlabel("Company", size=11)
+plt.ylabel("Closing Share Price", size=11)
+plt.title("Average Stock Price of <$50 cohort")
+plt.show()
+
+plt.figure(figsize=(10, 10))
+
+Mergefilt1 = Merge[(Merge.Result == '$50+')]
+
+sns.set(style="darkgrid")
+plots = sns.barplot(x="symbol", y="adj_close", data=Mergefilt1)
+
+for bar in plots.patches:
+    plots.annotate(format(bar.get_height(), '.2f'),
+                   (bar.get_x() + bar.get_width() / 2,
+                    bar.get_height()), ha='center', va='center',
+                   size=20, xytext=(0, 20),
+                   textcoords='offset points')
+
+plt.xlabel("Company", size=11)
+plt.ylabel("Closing Share Price", size=11)
+plt.title("Average Stock Price of $50+ cohort")
+plt.show()
