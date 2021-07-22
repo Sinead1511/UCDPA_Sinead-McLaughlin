@@ -26,8 +26,8 @@ print(data)
 
 import pandas as pd
 
-Twit = pd.read_csv("facebook_data.csv")
-FB = pd.read_csv("twtr_data.csv")
+FB = pd.read_csv("facebook_data.csv")
+Twit = pd.read_csv("twtr_data.csv")
 
 Merge = Twit.append(FB, sort=False)
 
@@ -109,3 +109,28 @@ plt.xlabel("Company", size=11)
 plt.ylabel("Closing Share Price", size=11)
 plt.title("Average Stock Price of $50+ cohort")
 plt.show()
+
+FB['adj_close'] = FB['adj_close'].round(1)
+print("Facebook max SP is: $", end="")
+FBSPmax = FB['adj_close'].max()
+print(FBSPmax)
+
+Twit['adj_close'] = Twit['adj_close'].round(1)
+print("Twitter max SP is: $", end="")
+TwitSPmax = Twit['adj_close'].max()
+print(TwitSPmax)
+
+FB['adj_close'] = FB['adj_close'].round(1)
+print("Facebook min SP is: $", end="")
+FBSPmin = FB['adj_close'].min()
+print(FBSPmin)
+
+Twit['adj_close'] = Twit['adj_close'].round(1)
+print("Twitter min SP is: $", end="")
+TwitSPmin = Twit['adj_close'].min()
+print(TwitSPmin)
+
+print("Facebook max SP is higher than Twitter max SP by: $", end="")
+TwitSPdiff = FBSPmax - TwitSPmax
+TwitSPdiffRD = TwitSPdiff.round(1)
+print(TwitSPdiffRD)
